@@ -60,6 +60,7 @@
           $("#m").val("");
           return false;
         });
+        socket.on('disconnect', )
         let user;
         socket.on("chat message", function (msg) {
           $("#messages").append($("<li>").text("user" + user + ": " + msg));
@@ -70,7 +71,7 @@
           user = username;
           $("#messages").append($("<li>").text(`user${username} connected`));
         });
-        socket.on("testing emission 2", function () {
+        socket.on("testing emission 2", function (inputUser) {
           $("#messages").append($("<li>").text(`user${user} disconnected`));
         });
       });

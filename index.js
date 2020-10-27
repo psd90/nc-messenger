@@ -7,19 +7,24 @@ app.get("/", (req, res) => {
 });
 
 let user = 1;
+const arrayOfUsers = [];
 
 io.on("connection", (socket) => {
+  arrayOfUsers.push(`User${user++}`);
   console.log("a user connected");
-  io.emit("testing emission", user++); //emit an event called 'testing emission' to all current users. We can pass in variables as the 2nd argument, or an object with multiple properties
+  console.log('socket ->', socket.conn);
+  io.emit("testing emission", user); //emit an event called 'testing emission' to all current users. We can pass in variables as the 2nd argument, or an object with multiple properties
   socket.on("chat message", (msg) => {
+    console.log(arrayOfUsers);
     io.emit("chat message", msg);
   });
   socket.on("chat message", (msg) => {
     console.log("message: " + msg);
   });
-  socket.on("disconnect", () => {
+  socket.on("disconnect", (user) => {
     io.emit("testing emission 2");
     console.log("user disconnected");
+    console.log('user',user);
   });
 });
 
